@@ -20,7 +20,7 @@ function validate($memo){
     $errors['title'] = " - タイトルは20文字以内で入力してください。- ";
   }
 
-  //重要度のバリデーション(int は入力時点でキャストしているのでここでは不要)
+  //重要度のバリデーション(intであることは入力時点でキャストしているのでここでは不要)
   if(!$memo['level']){
     $errors['level'] = " - 重要度を入力してください - ";
   }
@@ -82,8 +82,6 @@ function createMemo(){
       )
     );
 
-    // echo " - データベースに接続しました。- ".PHP_EOL;
-
     //データの追加処理
     try{
       //SQLの作成
@@ -101,10 +99,8 @@ function createMemo(){
       );
     EOT;
 
-
     // SQLの実行
     $res = $dbh->query($sql);
-    // echo " - データベースを追加しました。- ".PHP_EOL;
 
     //データ追加の例外処理
     }catch(PDOException $e){
@@ -119,7 +115,6 @@ function createMemo(){
   }
   //切断
   $dbh = null;
-  // echo ' - データベースから切断しました。- '.PHP_EOL.PHP_EOL;
   //---------- データベース接続プロセス終了 ----------
 
   //取得した値を配列に格納
@@ -134,21 +129,6 @@ function createMemo(){
 function displayMemos($memos){
   //メモを表示する
 
-  //メモがなかった場合
-  // if(!count($memos)){
-  //   echo PHP_EOL . ' - メモがありません。- ' . PHP_EOL.PHP_EOL;
-  // }else{
-    //メモを表示する
-  //   echo '--------------------'.PHP_EOL;
-  //   foreach($memos as $memo){
-  //   echo '題名： '.$memo['title'] .PHP_EOL;
-  //   echo '日時： '. $memo['created_at'] .PHP_EOL;
-  //   echo '重要度： '. $memo['level'] .PHP_EOL;
-  //   echo '内容： '. $memo['content'] .PHP_EOL;
-  //   echo '--------------------'.PHP_EOL.PHP_EOL;
-  //   }
-  // }
-
   //---------- データベース接続プロセス開始 ----------
   try {
     // 接続処理
@@ -162,8 +142,6 @@ function displayMemos($memos){
       )
     );
 
-    // echo " - データベースに接続しました。- ".PHP_EOL;
-
     //データの取得・表示
     try {
       //SQL文の作成
@@ -171,7 +149,6 @@ function displayMemos($memos){
 
       //SQLの実行（取得）
       $stmt = $dbh -> query($sql);
-      // echo PHP_EOL." - データを取得しました。- ".PHP_EOL.PHP_EOL;
 
       //表示
       while($memo = $stmt -> fetch(PDO::FETCH_ASSOC)){
@@ -195,7 +172,6 @@ function displayMemos($memos){
   }
   //切断
   $dbh = null;
-  // echo ' - データベースから切断しました。- '.PHP_EOL.PHP_EOL;
   //---------- データベース接続プロセス終了 ----------
 }
 
